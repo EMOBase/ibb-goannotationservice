@@ -18,7 +18,6 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -44,7 +43,7 @@ public class GOAnnotation {
     @Column(name = "gene_id")
     private String geneId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(optional = true)
     @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumn(
         name = "go_term_id",

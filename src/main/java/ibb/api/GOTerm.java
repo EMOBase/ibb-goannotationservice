@@ -1,5 +1,6 @@
 package ibb.api;
 
+import ibb.api.parser.OBOStanza;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -13,6 +14,15 @@ public class GOTerm {
 
     private String name;
     private String aspect;
+
+    public static GOTerm fromOBOStanza(OBOStanza oboStanza) {
+        GOTerm goTerm = new GOTerm();
+        goTerm.setId(oboStanza.getId());
+        goTerm.setName(oboStanza.getAttribute("name"));
+        goTerm.setAspect(oboStanza.getAttribute("namespace"));
+        return goTerm;
+
+    }
 
     public String getId() {
         return id;
