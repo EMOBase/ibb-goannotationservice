@@ -5,6 +5,8 @@ import java.time.Instant;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.hibernate.Length;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import ibb.api.parser.OfficialGOAnnotation;
@@ -43,7 +45,13 @@ public class GOAnnotation {
     private String geneId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "go_term_id", insertable = false, updatable = false, foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+    @NotFound(action = NotFoundAction.IGNORE)
+    @JoinColumn(
+        name = "go_term_id",
+        insertable = false,
+        updatable = false,
+        foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT)
+    )
     private GOTerm goTerm;
 
     @NotBlank
@@ -54,6 +62,7 @@ public class GOAnnotation {
     private String evidence;
     
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Status status;
 
     @NotNull

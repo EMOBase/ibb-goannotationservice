@@ -2,6 +2,9 @@ package ibb.api;
 
 import java.util.List;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.jboss.logging.Logger;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -10,12 +13,16 @@ import jakarta.persistence.EntityManager;
 public class GOAnnotationRepository {
     
     @Inject
-    EntityManager em;
+    EntityManager entityManager;
 
-    private static final int BATCH_SIZE = 50; // Must be same as JDBC batch size in application.propperties
+    @ConfigProperty(name = "quarkus.hibernate-orm.jdbc.statement-batch-size")
+    int batchSize;
+
+    @Inject
+    Logger logger;
 
     public List<GOAnnotation> findByGeneIds(List<String> geneIds) {
-        return em.createQuery(
+        return entityManager.createQuery(
                 "select a from GOAnnotation a " +
                 "left join fetch a.goTerm " +
                 "where a.geneId in :geneIds",
@@ -25,7 +32,7 @@ public class GOAnnotationRepository {
     }
 
     public List<GOAnnotation> findByStatus(List<GOAnnotation.Status> statuses) {
-        return em.createQuery(
+        return entityManager.createQuery(
                 "select a from GOAnnotation a " +
                 "left join fetch a.goTerm " +
                 "where a.status in :statuses",
@@ -40,7 +47,7 @@ public class GOAnnotationRepository {
     }
 
     public int delete(List<Long> ids) {
-        return em.createQuery(
+        return entityManager.createQuery(
                 "delete GOAnnotation " +
                 "where id in :ids"
             )
@@ -49,7 +56,7 @@ public class GOAnnotationRepository {
     }
 
     public int updateStatus(List<Long> ids, GOAnnotation.Status status) {
-        return em.createQuery(
+        return entityManager.createQuery(
                 "update GOAnnotation a " +
                 "set a.status = :status " +
                 "where id in :ids"
@@ -60,16 +67,18 @@ public class GOAnnotationRepository {
     }
 
     public GOAnnotation create(GOAnnotation goAnnotation) {
-        em.persist(goAnnotation);
+        entityManager.persist(goAnnotation);
         return goAnnotation;
     }
 
     public void create(List<GOAnnotation> goAnnotations) {
+        logger.debugv("Start bulk insert of {0} entities", goAnnotations.size());
         for (int i = 0; i < goAnnotations.size(); i++) {
-            em.persist(goAnnotations.get(i));
-            if (i % BATCH_SIZE == 0) {
-                em.flush();
-                em.clear();
+            entityManager.persist(goAnnotations.get(i));
+            if (i > 0 && i % batchSize == 0) {
+                entityManager.flush();
+                entityManager.clear();
+                logger.debugv("\tInserted: {0}", i);
             }
         }
     }

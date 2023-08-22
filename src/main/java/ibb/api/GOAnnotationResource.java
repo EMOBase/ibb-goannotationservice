@@ -9,7 +9,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.eclipse.microprofile.context.ManagedExecutor;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import ibb.api.parser.GAFParser;
@@ -33,9 +32,6 @@ public class GOAnnotationResource {
     
     @Inject
     GOAnnotationRepository goAnnotationRepository;
-
-    @Inject
-    ManagedExecutor executor;
 
     @POST
     @Path("/unreviewed")
@@ -119,6 +115,10 @@ public class GOAnnotationResource {
         try (GAFParser parser = new GAFParser(inputStream)) {
             List<GOAnnotation> goAnnotations = parser.stream()
                 .map(item -> GOAnnotation.fromOfficialGoAnnotation(item))
+                .map((goAnnotation) -> {
+                    goAnnotation.setStatus(GOAnnotation.Status.OFFICIAL);
+                    return goAnnotation;
+                })
                 .collect(Collectors.toList());
 
             goAnnotationRepository.create(goAnnotations);
