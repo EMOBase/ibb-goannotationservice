@@ -1,6 +1,7 @@
 package ibb.api;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
@@ -31,5 +32,9 @@ public class GOTermRepository {
                 logger.debugv("\tInserted: {0}", i);
             }
         }
+    }
+
+    public Optional<GOTerm> findByIdOptional(String id) {
+        return Optional.ofNullable(entityManager.find(GOTerm.class, id));
     }
 }

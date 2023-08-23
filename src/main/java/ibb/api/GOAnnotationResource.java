@@ -33,12 +33,19 @@ public class GOAnnotationResource {
     @Inject
     GOAnnotationRepository goAnnotationRepository;
 
+    @Inject
+    GOTermRepository goTermRepository;
+
     @POST
     @Path("/unreviewed")
     @Transactional
     public Response createUnreviewed(@Valid GOAnnotation goAnnotation) {
         goAnnotation.setStatus(GOAnnotation.Status.UNREVIEWED);
         GOAnnotation dbGoAnnotation = goAnnotationRepository.create(goAnnotation);
+        Optional<GOTerm> goTermOptional = goTermRepository.findByIdOptional(dbGoAnnotation.getGoTermId());
+        goTermOptional.ifPresent((goTerm) -> {
+            dbGoAnnotation.setGoTerm(goTerm);
+        });
         return Response.status(Response.Status.CREATED)
             .entity(dbGoAnnotation)
             .build();
