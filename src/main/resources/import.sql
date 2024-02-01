@@ -1,4 +1,0 @@
--- INSERT INTO GOTerm (id, name, aspect) VALUES ('GO:0035290', 'trunk segmentation', 'biological_process');
--- INSERT INTO GOTerm (id, name, aspect) VALUES ('GO:0035287', 'head segmentation', 'biological_process');
--- INSERT INTO GOAnnotation (gene_id, go_term_id, evidence, reference, quotation, submitter_name, submitter_email, submitter_shown) VALUES ('TC003413', 'GO:0035290', 'IMP', '18586236', 'Depletion of Tc-knirps function results in mild abdominal segmentation defects', 'iBeetle Team', 'contact@ibeetle-base.uni-goettingen.de', TRUE);
--- INSERT INTO GOAnnotation (gene_id, go_term_id, evidence, reference, quotation, submitter_name, submitter_email, submitter_shown) VALUES ('TC003413', 'GO:0035287', 'IMP', '18586236', 'Tribolium head patterning depends on early knirps function. In Tribolium, the inactivation of Tc-knirps activity leads to a deletion of the antennal and mandibular segments', 'iBeetle Team', 'contact@ibeetle-base.uni-goettingen.de', TRUE);

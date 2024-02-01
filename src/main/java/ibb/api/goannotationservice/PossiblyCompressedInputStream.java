@@ -1,4 +1,4 @@
-package ibb.api;
+package ibb.api.goannotationservice;
 
 import java.io.IOException;
 import java.io.InputStream;

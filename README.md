@@ -1,55 +1,33 @@
-# ibb-go
+# Gene Ontology Annotation Service for the iBeetle-Base project
 
-Service to handle Gene Ontology terms and annotations
+## Development
 
-This project uses [Quarkus](https://quarkus.io/).
+Prerequisites:
+- [quarkus-cli](https://quarkus.io/guides/cli-tooling) is installed.
 
-## Running the application in dev mode
-
-You can run your application in dev mode that enables live coding using:
-```shell script
+To run the application in dev mode, run:
+```bash
 quarkus dev
 ```
 
-## Create initial data
+These commands might be useful after a long time not working on this project:
 
-If this is the first time you run the the service and there are no data submitted from users,
-you can add initial GO terms and GO annotations from Gene Ontology Consortium.
-Otherwise, you should import data from existing database.
+- `quarkus update`: Update all quarkus dependencies to latest versions
+- `./mvnw -N wrapper:wrapper -Dmaven=3.8.7`: Update maven wrapper to new version, in this case `3.8.7`
+- `quarkus test`: Ensure all the tests still pass
 
-Downloads:
+## Deployment
 
- - http://current.geneontology.org/annotations/fb.gaf.gz (FlyBase GO Annotations)
- - http://purl.obolibrary.org/obo/go.obo (GO term definitions)
-
-Run service in dev mode:
-
-```shell script
-quarkus dev
+To run tests and build docker image:
+```
+quarkus build -Dquarkus.container-image.build=true
 ```
 
-Upload data:
-
-```shell script
-curl -X 'POST' \
-  'http://localhost:8080/go-annotations/official' \
-  -H 'accept: */*' \
-  -H 'Content-Type: multipart/form-data' \
-  -F 'file=@fb.gaf.gz;type=application/x-gzip'
-
-curl -X 'POST' \
-  'http://localhost:8080/go-terms' \
-  -H 'accept: */*' \
-  -H 'Content-Type: multipart/form-data' \
-  -F 'file=@go.obo'
+To run the same thing as above but in 2 commands:
+```
+quarkus test --once
+quarkus build -Dquarkus.container-image.build=true -DskipTests
 ```
 
-Save the database:
-
-```shell script
-docker exec -it [container_id] /bin/bash
-
-mysqldump -u quarkus -h0.0.0.0 -p quarkus --no-tablespaces | gzip > geneontologyservice.sql.gz
-```
-
-The default password in dev mode is `quarkus`
+Prerequisites before running the docker container:
+- An elasticsearch instance is accessible at `es:9200`.

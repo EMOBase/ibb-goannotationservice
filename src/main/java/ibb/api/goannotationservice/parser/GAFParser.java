@@ -1,4 +1,4 @@
-package ibb.api.parser;
+package ibb.api.goannotationservice.parser;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,28 +38,28 @@ public final class GAFParser extends Parser<OfficialGOAnnotation> {
                     );
                 }
 
-                assoc.setDb(cols[0]);
-                assoc.setDbObjectId(cols[1]);
-                assoc.setDbObjectSymbol(cols[2]);
-                assoc.setQualifier(cols[3]);
-                assoc.setGoId(cols[4]);
-                assoc.setDbReference(cols[5]);
-                assoc.setEvidence(cols[6]);
-                assoc.setWithOrFrom(cols[7]);
-                assoc.setAspect(cols[8]);
-                assoc.setDbObjectName(cols[9]);
-                assoc.setDbObjectSynonym(cols[10]);
-                assoc.setDbObjectType(cols[11]);
-                assoc.setTaxon(cols[12]);
-                assoc.setDate(cols[13]);
-                assoc.setAssignedBy(cols[14]);
+                assoc.db = cols[0];
+                assoc.dbObjectId = cols[1];
+                assoc.dbObjectSymbol = cols[2];
+                assoc.qualifier = cols[3];
+                assoc.goId = cols[4];
+                assoc.dbReference = cols[5];
+                assoc.evidence = cols[6];
+                assoc.withOrFrom = cols[7];
+                assoc.aspect = cols[8];
+                assoc.dbObjectName = cols[9];
+                assoc.dbObjectSynonym = cols[10];
+                assoc.dbObjectType = cols[11];
+                assoc.taxon = cols[12];
+                assoc.date = cols[13];
+                assoc.assignedBy = cols[14];
 
                 if (cols.length > 15) {
-                    assoc.setAnnotationExtension(cols[15]);
+                    assoc.annotationExtension = cols[15];
                 }
 
                 if (cols.length > 16) {
-                    assoc.setGeneProductFormId(cols[16]);
+                    assoc.geneProductFormId = cols[16];
                 }
 
                 if (cols.length > 17) {

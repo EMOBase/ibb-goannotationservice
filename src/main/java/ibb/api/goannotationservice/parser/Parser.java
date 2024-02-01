@@ -1,4 +1,4 @@
-package ibb.api.parser;
+package ibb.api.goannotationservice.parser;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
