@@ -3,6 +3,7 @@ package ibb.api.goannotationservice;
 import java.util.Map;
 
 import io.smallrye.config.ConfigMapping;
+import io.smallrye.config.WithDefault;
 
 @ConfigMapping(prefix = "goannotationservice")
 public interface Config {
@@ -16,7 +17,9 @@ public interface Config {
     }
 
     interface ESConfig {
+        @WithDefault("false")
         boolean deleteIndexOnStart();
+
         String indexPrefix();
     }
 

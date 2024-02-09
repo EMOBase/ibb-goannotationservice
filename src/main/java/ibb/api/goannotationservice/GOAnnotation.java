@@ -24,6 +24,9 @@ public class GOAnnotation {
         public String id;
 
         @NotBlank
+        public String name;
+
+        @NotBlank
         public String aspect;
     }
 
