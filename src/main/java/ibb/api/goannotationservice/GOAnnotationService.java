@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 
 import org.jboss.resteasy.reactive.RestPath;
 
+import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
@@ -69,6 +70,7 @@ public class GOAnnotationService {
 
     @PUT
     @Path("/")
+    @Authenticated
     public void update(
         @NotEmpty
         List<@Valid @ConvertGroup(to=GOAnnotation.ValidationGroups.Update.class) GOAnnotation> anns) {
