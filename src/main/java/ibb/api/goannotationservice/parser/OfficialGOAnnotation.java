@@ -22,4 +22,26 @@ public class OfficialGOAnnotation {
     public String assignedBy;
     public String annotationExtension;
     public String geneProductFormId;
+
+    public String toGAFLine() {
+        return String.join("\t",
+            db != null ? db : "",
+            dbObjectId != null ? dbObjectId : "",
+            dbObjectSymbol != null ? dbObjectSymbol : "",
+            qualifier != null ? qualifier : "",
+            goId != null ? goId : "",
+            dbReference != null ? dbReference : "",
+            evidence != null ? evidence : "",
+            withOrFrom != null ? withOrFrom : "",
+            aspect != null ? aspect : "",
+            dbObjectName != null ? dbObjectName : "",
+            dbObjectSynonym != null ? dbObjectSynonym : "",
+            dbObjectType != null ? dbObjectType : "",
+            taxon != null ? taxon : "",
+            date != null ? date : "",
+            assignedBy != null ? assignedBy : "",
+            annotationExtension != null ? annotationExtension : "",
+            geneProductFormId != null ? geneProductFormId : ""
+        );
+    }
 }
