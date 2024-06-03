@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Stream;
 
+import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.jboss.resteasy.reactive.RestPath;
 
 import ibb.api.goannotationservice.parser.OfficialGOAnnotation;
@@ -41,6 +42,7 @@ public class GOAnnotationService {
 
     @POST
     @Path("/unreviewed")
+    @Operation(hidden = true)
     public GOAnnotation createUnreviewed(
         @Valid
         @ConvertGroup(to=GOAnnotation.ValidationGroups.Create.class)
@@ -73,6 +75,7 @@ public class GOAnnotationService {
     @PUT
     @Path("/")
     @Authenticated
+    @Operation(hidden = true)
     public void update(
         @NotEmpty
         List<@Valid @ConvertGroup(to=GOAnnotation.ValidationGroups.Update.class) GOAnnotation> anns) {
