@@ -3,11 +3,15 @@ package ibb.api.goannotationservice;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import ibb.api.goannotationservice.parser.OfficialGOAnnotation;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 
+// The Elasticsearch client maps documents to this class (and Term) by
+// reflection, which a native executable only allows for registered classes.
+@RegisterForReflection
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class GOAnnotation {
     public static interface ValidationGroups {
